@@ -4,7 +4,7 @@
 % ordered(+Tree,-Branch)
 % ha successo quando Tree è un albero binario, e Branch è una lista che rappresenta un ramo ordinato in senso non decrescente dalla radice a una foglia dell'albero.
 
-% radice(+T,?X) = X e' la radice di T
+% radice(+T,?X) = X è la radice di T
 
 % example
 % two(10,one(20,two(50,leaf(5),leaf(8))),one(30,two(30,one(35,leaf(100)),two(40,leaf(6),leaf(48)))))
