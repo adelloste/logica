@@ -7,7 +7,7 @@
 % radice(+T,?X) = X è la radice di T
 
 % example
-% two(10,one(20,two(50,leaf(5),leaf(8))),one(30,two(30,one(35,leaf(100)),two(40,leaf(6),leaf(48)))))
+% ordered(two(10,one(20,two(50,leaf(5),leaf(8))),one(30,two(30,one(35,leaf(100)),two(40,leaf(6),leaf(48))))),X).
 
 radice(leaf(X),X).
 radice(one(X,_),X).
