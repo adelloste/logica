@@ -6,6 +6,9 @@
 % che ha successo quando Start e Dest sono due locali e Porte è una lista di porte da attraversare per andare da Start a Dest.
 % La lista di porte non deve avere ripetizioni (cioè il percorso deve essere senza cicli).
 
+% example
+% percorso(3,6,X).
+
 connects(a,1,2).
 connects(b,1,3).
 connects(c,1,4).
