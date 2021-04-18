@@ -9,6 +9,5 @@
 % disordinati([1,10,5,6,7,4,9],Result)
 
 disordinati([],[]).
-disordinati([_],[]).
-disordinati([X,Y|Rest],[Y|Result]) :- Y < X, disordinati([Y|Rest],Result).
-disordinati([_,Y|Rest],Result) :- disordinati([Y|Rest],Result).
+disordinati([X,Y|Rest],[Y|Result]) :- Y < X, disordinati([Y|Rest],Result), !.
+disordinati([_,Rest],Result) :- disordinati(Rest,Result).
