@@ -1,8 +1,12 @@
 % swipl
 % consult('exams/2016-febb.pl').
 
-% actions(+Start,+Goal,?Arcs)
-% vero se Arcs è la lista delle etichette degli archi di un cammino senza ripetizioni di nodi da Start a Goal nel grafo definito dalla procedura arc (attenzione ai cicli!).
+% Un grafo con etichette sugli archi si può rappresentare in Prolog mediante un insieme di fatti della forma arc(X,A,Y) (esiste un arco da X a Y etichettato da A).
+% L'etichetta può rappresentare un'azione che causa la transizione tra i due nodi.
+% Definire un predicato Prolog actions(+Start,+Goal,?Arcs), vero se Arcs è la lista delle etichette degli archi di un cammino senza ripetizioni di nodi da Start a Goal nel grafo definito dalla procedura arc (attenzione ai cicli!).
+
+% example
+% actions(3,6,X).
 
 arc(1,a,2).
 arc(1,b,3).
