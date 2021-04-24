@@ -1,6 +1,15 @@
 % swipl
 % consult('examples/all.pl').
 
+% Es 3
+% Definire il predicato palindroma(X), vero se X è una lista palindroma
+% (se la lista viene letta in un verso o nell'altro si ottiene la stessa sequenza
+% di elementi). Ad esempio [a,b,c,b,a] è palindroma, [a,b,c,a] non lo è.
+
+palindroma([]).
+palindroma([_]).
+palindroma([X|Rest]) :- append(Middle,[X],Rest), palindroma(Middle). % utilizzando append rimuovo l'ultimo elemento di Rest
+
 % Es 4
 % Definire un predicato maxlist(+L,?N) (dove L è una lista di numeri),
 % vero se N è il massimo elemento della lista L. Fallisce se L è vuota.
@@ -90,6 +99,21 @@ mkset([X|Rest],[X|S]) :- mkset(Rest,S).
 union([],B,B).
 union([X|Xs],B,U) :- member(X,B), !, union(Xs,B,U).
 union([X|Xs],B,[X|U]) :- union(Xs,B,U).
+
+% Ex 11
+% Definire un predicato cartprod(+A,+B,-Set), vero se A e B sono liste
+% e Set una lista di coppie che rappresenta il prodotto cartesiano di A e B.
+% Ad esempio:
+% 
+% ?- cartprod([a,b,c],[1,2],Set).
+% Set = [ (a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)].
+
+couple(_,[],[]) :- !.
+couple(X,[Y|Ys],[(X,Y)|Rest]) :- couple(X,Ys,Rest).
+
+cartprod(_,[],[]) :- !.
+cartprod([],_,[]) :- !.
+cartprod([X|Xs],Y,A) :- couple(X,Y,C), cartprod(Xs,Y,R), append(C,R,A).
 
 % Ex 12
 % Definire un predicato insert(X,L1,L2), vero se L2 si ottiene inserendo X
@@ -183,4 +207,4 @@ arc(d,b).
 arc(e,c).
 path(S,G,P) :- path(S,G,P,[]).
 path(X,X,[X],Visited) :- \+ member(X,Visited).
-path(S,G,[S|P],Visited) :- \+ member(X,Visited), arc(S,Z), path(Z,G,P,[S|Visited]).
+path(S,G,[S|P],Visited) :- \+ member(S,Visited), arc(S,Z), path(Z,G,P,[S|Visited]).
