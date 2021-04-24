@@ -109,3 +109,78 @@ union([X|Xs],B,[X|U]) :- union(Xs,B,U).
 insert(X,L1,[X|L1]).
 insert(X,[Y|Ys],[Y|N]) :- insert(X,Ys,N).
 
+% Ex 14
+% Definire un predicato search subset(+IntList,+N,?Set), dove IntList
+% è una lista di interi positivi e N un intero positivo, che sia vero se Set
+% è una lista rappresentante un sottoinsieme di IntList, tale che la somma
+% degli elementi in Set è uguale a N. Si può assumere che IntList sia senza
+% ripetizioni. Ad esempio:
+% 
+% ?- search_subset([4,8,5,3,9,6,7],9,Subset).
+% Subset = [4, 5] ;
+% Subset = [3, 6] ;
+% Subset = [9] ;
+% false.
+
+search_subset(_,0,[]) :- !.
+search_subset([X|Xs],T,[X|Rest]) :- X =< T, N is T - X, search_subset(Xs,N,Rest).
+search_subset([_|Xs],T,Rest) :-  search_subset(Xs,T,Rest).
+
+% Ex 15
+% Conveniamo di rappresentare gli alberi binari usando l’atomo empty per
+% l’albero vuoto e strutture della forma t(Root,Left,Right) per alberi con
+% radice Root, sottoalbero sinistro Left e sottoalbero destro Right. Definire
+% i predicati:
+
+% Ex 15.a
+% height(+T,?N) = N è l’altezza dell’albero T. Il predicato fallisce
+% se T è l’albero vuoto.
+
+height(t(_,empty,empty),0).
+height(t(_,L,empty),H) :- height(L,H_L), H is H_L + 1.
+height(t(_,empty,R),H) :- height(R,H_R), H is H_R + 1.
+height(t(_,L,R),H) :- height(L,H_L), height(R,H_R), (H_L >= H_R, H is H_L + 1; H is H_R + 1).
+
+% Ex 15.c
+% size(+T,?N) = N `e il numero di nodi dell’albero T.
+
+size(empty, 0).
+size(t(_,Left,Right),N) :- size(Left,L), size(Right,R), N is L + R + 1.
+
+% Ex 15.d
+% labels(+T,-L) = L è una lista di tutte le etichette dei nodi di T.
+% Se diversi nodi di T hanno la stessa etichetta, la lista L conterrà
+% ripetizioni dello stesso elemento. Gli elementi di L possono occorrere
+% in qualsiasi ordine.
+
+labels(empty,[]).
+labels(t(X,Left,Right),[X|Rest]) :- labels(Left,L), labels(Right,R), append(L,R,Rest).
+
+% Ex 15.e
+% branch(+T,?Leaf,?Path) = Path è una lista che rappresenta un
+% ramo dalla radice di T fino a una foglia etichettata da Leaf.
+
+branch(t(X,empty,empty),X,[X]).
+branch(t(X,Left,Right),Y,[X|P]) :- branch(Left,Y,P); branch(Right,Y,P).
+
+% Ex 16
+% Un grafo si può rappresentare mediante un insieme di fatti della forma
+% arc(X,Y), che definiscono la relazione binaria "esiste un arco da X a Y".
+% Definire un predicato path(?Start,?Goal,?Path) = Path è una lista che
+% rappresenta un cammino da Start a Goal nel grafo definito nel programma.
+% Suggerimento: utilizzare un predicato ausiliario a quattro argomenti
+% path(?Start,?Goal,?Path,+Visited) = Path è una lista che rappresenta un cammino da Start a Goal che non passa per nessuno dei nodi
+% della lista Visited.
+
+arc(a,b).
+arc(a,e).
+arc(b,a).
+arc(b,c).
+arc(c,c).
+arc(c,d).
+arc(d,c).
+arc(d,b).
+arc(e,c).
+path(S,G,P) :- path(S,G,P,[]).
+path(X,X,[X],Visited) :- \+ member(X,Visited).
+path(S,G,[S|P],Visited) :- \+ member(X,Visited), arc(S,Z), path(Z,G,P,[S|Visited]).
