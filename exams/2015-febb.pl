@@ -7,5 +7,9 @@
 % soluzioni (cancellando la seconda occorrenza, la terza ecc.). Usare quindi opportunamente il cut o il not.
 
 del_first(A,[A],[]).
-del_first(A,[A|Coda],[Coda]).
+del_first(A,[A|Coda],Coda) :- !.
 del_first(A,[T|Coda],[T|C]) :- del_first(A,Coda,C).
+
+% oppure
+del_first(X,[X|Rest],Rest) :- !.
+del_first(X,[Y|Ys],[Y|Rest]) :- del_first(X,Ys,Rest).
