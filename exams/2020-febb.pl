@@ -9,8 +9,7 @@
 % Usare quindi opportunamente il cut o il not
 
 % example
-% cancella(1,[2,4,5,6,7,1,8,9])
-% assoc(X,[(b,2),(a,1)],V).
+% cancella(1,[2,4,5,1,6,7,1,8,9],X).
 
 cancella(X,[X],[]).
 cancella(X,[X|Rest],Rest) :- !.
