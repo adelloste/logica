@@ -51,6 +51,12 @@ suffisso(Suff,[_|Rest]) :- suffisso(Suff,Rest).
 % elementi contigui in L. Ad esempio, le sottoliste di [1,2,3] sono: la lista
 % vuota [] e le liste [1], [2], [3], [1,2], [2,3] e [1,2,3] stessa.
 
+sublist([],_).
+sublist([X|Xs],[X|Ys]) :- sublist(Xs,Ys).
+sublist([X|Xs],[_|Ys]) :- sublist([X|Xs],Ys).
+
+% oppure
+
 sublist(Sub,L) :- append(_,Suffisso,L), append(Sub,_,Suffisso).
 
 % Es 10.a
