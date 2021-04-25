@@ -12,6 +12,6 @@
 % cancella(1,[2,4,5,6,7,1,8,9])
 % assoc(X,[(b,2),(a,1)],V).
 
-cancella(X,[X],[]) :- !.
+cancella(X,[X],[]).
 cancella(X,[X|Rest],Rest) :- !.
 cancella(X,[Y|Ys],[Y|Rest]) :- cancella(X,Ys,Rest).
