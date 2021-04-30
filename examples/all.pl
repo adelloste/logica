@@ -210,6 +210,13 @@ size(t(_,Left,Right),N) :- size(Left,L), size(Right,R), N is L + R + 1.
 labels(empty,[]).
 labels(t(X,Left,Right),[X|Rest]) :- labels(Left,L), labels(Right,R), append(L,R,Rest).
 
+% oppure
+
+labels(empty,[]) :- !.
+labels(t(X,L,empty),[X|Y]) :- labels(L,Y), !.
+labels(t(X,empty,R),[X|Y]) :- labels(R,Y), !.
+labels(t(X,Left,Right),[X|Rest]) :- labels(Left,L), labels(Right,R), append(L,R,Rest).
+
 % Ex 15.e
 % branch(+T,?Leaf,?Path) = Path è una lista che rappresenta un
 % ramo dalla radice di T fino a una foglia etichettata da Leaf.
