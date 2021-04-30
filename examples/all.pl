@@ -190,6 +190,11 @@ height(t(_,L,empty),H) :- height(L,H_L), H is H_L + 1.
 height(t(_,empty,R),H) :- height(R,H_R), H is H_R + 1.
 height(t(_,L,R),H) :- height(L,H_L), height(R,H_R), (H_L >= H_R, H is H_L + 1; H is H_R + 1).
 
+% Ex 15.b
+% reflect(T,T1) = T è l’immagine riflessa di T1. Almeno uno tra T e T1 devono essere completamente istanziati.
+reflect(empty,empty).
+reflect(t(X,Left,Right),t(X,R,L)) :- reflect(Left,L), reflect(Right,R).
+
 % Ex 15.c
 % size(+T,?N) = N `e il numero di nodi dell’albero T.
 
