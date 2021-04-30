@@ -7,7 +7,7 @@
 % Se vi sono più foglie etichettate da Leaf, il predicato genererà (mediante backtracking) tutti i rami dalla radice a Leaf. Richiamato con Leaf e Branch variabili, il predicato genererà (mediante backtracking) tutti i rami dell'albero.
 
 % example
-% branch(two(10,one(20,two(50,leaf(5),leaf(8))),one(30,two(2,one(3,leaf(100)),two(4,leaf(6),leaf(8))))),100)
+% branch(two(10,one(20,two(50,leaf(5),leaf(8))),one(30,two(2,one(3,leaf(100)),two(4,leaf(6),leaf(100))))),100,X)
 
 branch(leaf(X),X,[X]).
 branch(one(X,T),L,[X|F]) :- branch(T,L,F).
