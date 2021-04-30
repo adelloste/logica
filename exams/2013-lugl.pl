@@ -7,8 +7,13 @@
 % example
 % assocmin([(3,a),(2,b),(4,c),(2,d)],E)
 
-min([],_).
-min([(X,_)|Coda], L) :- (L =< X), min(Coda,L).
+% Predicato ausiliare min(+L,?X) che ha succeso se X è il minimo della lista L
+min([(X,_)],X) :- !.
+min([(X,_)|Rest],X) :- min(Rest,N), X =< N, !.
+min([_|Rest],N) :- min(Rest,N).
 
-assocmin([(N,E)|Coda],E) :- min(Coda,N).
-assocmin([(_,_)|Coda],E) :- assocmin(Coda,E).
+% Predicato ausiliare assoc(+L,?E,?X) che ha successo se il valore E e X sono associati alla lista L
+assoc([(X,E)|_],E,X).
+assoc([_|Rest],E,X) :- assoc(Rest,E,X).
+
+assocmin(L,E) :- min(L,X), assoc(L,E,X).
