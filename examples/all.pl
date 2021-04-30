@@ -18,6 +18,12 @@ maxlist([X],X).
 maxlist([X,Y|Rest],Result) :- X >= Y, !, maxlist([X|Rest],Result).
 maxlist([_,Y|Rest],Result) :- maxlist([Y|Rest],Result).
 
+% oppure
+
+maxlist([X],[X]).
+maxlist([X|Rest],X) :- maxlist(Rest,MX), X >= MX, !.
+maxlist([_|Rest],X) :- maxlist(Rest,X).
+
 % Es 5
 % Avendo definito pari(X) :- 0 is X mod 2.
 % definire il predicato split(+L,?P,?D) = se L è una lista di interi, P è la
@@ -99,12 +105,25 @@ mkset([],[]).
 mkset([X|Rest],S) :- member(X,Rest), !, mkset(Rest,S).
 mkset([X|Rest],[X|S]) :- mkset(Rest,S).
 
+% oppure
+
+mkset([],[]).
+mkset([X|Rest],[X|Result]) :- mkset(Rest,Result), \+ member(X,Result), !.
+mkset([_|Rest],Result) :- mkset(Rest,Result).
+
+
 % Ex 10g
 % union(+A,+B,-Union) = Union è una lista (senza ripetizioni, se
 % anche A e B sono senza ripetizioni) che rappresenta l’unione di A e B.
 union([],B,B).
 union([X|Xs],B,U) :- member(X,B), !, union(Xs,B,U).
 union([X|Xs],B,[X|U]) :- union(Xs,B,U).
+
+% oppure
+
+union([],U,U).
+union([X|Rest],L,[X|Result]) :- union(Rest,L,Result), \+ member(X,L), !.
+union([_|Rest],L,Result) :- union(Rest,L,Result).
 
 % Ex 11
 % Definire un predicato cartprod(+A,+B,-Set), vero se A e B sono liste
