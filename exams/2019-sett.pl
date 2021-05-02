@@ -9,5 +9,5 @@
 % complemento([1,2,3,4,5,6],[2,4,6],C)
 % complemento([1,2,3,4,5,6],[2,4,7],C)
 
-complemento(L,[],L) :- !.
-complemento(L,[X|Rest],C) :- select(X,L,N), complemento(N,Rest,C).
+complemento(Set, [], Set) :- !.
+complemento(Set, [S|Subset], C) :- select(S, Set, N_set), complemento(N_set, Subset, C).
