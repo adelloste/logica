@@ -14,15 +14,15 @@ palindroma([X|Rest]) :- append(Middle,[X],Rest), palindroma(Middle). % utilizzan
 % Definire un predicato maxlist(+L,?N) (dove L è una lista di numeri),
 % vero se N è il massimo elemento della lista L. Fallisce se L è vuota.
 
-maxlist([X],X).
-maxlist([X,Y|Rest],Result) :- X >= Y, !, maxlist([X|Rest],Result).
-maxlist([_,Y|Rest],Result) :- maxlist([Y|Rest],Result).
+maxlist([X],[X]) :- !.
+maxlist([X|Rest],X) :- maxlist(Rest,MX), X >= MX, !.
+maxlist([_|Rest],X) :- maxlist(Rest,X).
 
 % oppure
 
-maxlist([X],[X]).
-maxlist([X|Rest],X) :- maxlist(Rest,MX), X >= MX, !.
-maxlist([_|Rest],X) :- maxlist(Rest,X).
+maxlist([X],X).
+maxlist([X,Y|Rest],Result) :- X >= Y, !, maxlist([X|Rest],Result).
+maxlist([_,Y|Rest],Result) :- maxlist([Y|Rest],Result).
 
 % Es 5
 % Avendo definito pari(X) :- 0 is X mod 2.
@@ -245,3 +245,10 @@ arc(e,c).
 path(S,G,P) :- path(S,G,P,[]).
 path(X,X,[X],Visited) :- \+ member(X,Visited).
 path(S,G,[S|P],Visited) :- \+ member(S,Visited), arc(S,Z), path(Z,G,P,[S|Visited]).
+
+% flat(+X,?Y) che riporti in Y tutti i termini che occorrono in X
+% Esempio flat([a,[f(b),10,[c,d]]],Flat). -> Flat = [a,f(b),10,c,d].
+
+flat([],[]).
+flat([X|Rest],L) :- is_list(X), !, flat(X,L1), flat(Rest,L2), append(L1,L2,L).
+flat([X|Rest],[X|L]) :- flat(Rest,L).
