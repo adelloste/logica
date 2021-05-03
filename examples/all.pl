@@ -247,8 +247,17 @@ path(X,X,[X],Visited) :- \+ member(X,Visited).
 path(S,G,[S|P],Visited) :- \+ member(S,Visited), arc(S,Z), path(Z,G,P,[S|Visited]).
 
 % flat(+X,?Y) che riporti in Y tutti i termini che occorrono in X
-% Esempio flat([a,[f(b),10,[c,d]]],Flat). -> Flat = [a,f(b),10,c,d].
+% Esempio flat([a,[f(b),10,[c,d]]],Flat). -> Flat = [a, f(b), 10, c, d].
 
 flat([],[]).
 flat([X|Rest],L) :- is_list(X), !, flat(X,L1), flat(Rest,L2), append(L1,L2,L).
 flat([X|Rest],[X|L]) :- flat(Rest,L).
+
+
+% subst(+X,+Y,+L,-Nuova) Nuova è la lista che si ottiene da L sostituendo tutte
+% le occorrenze di X con Y, se X non occorre, Nuova è uguale a L
+% Esempio subst(a,b,[a,f,g,h,a,e,g],X). -> X = [b, f, g, h, b, e, g].
+
+subst(_,_,[],[]).
+subst(X,Y,[X|Rest],[Y|Result]) :- subst(X,Y,Rest,Result), !.
+subst(X,Y,[E|Rest],[E|Result]) :- subst(X,Y,Rest,Result).
